@@ -54,6 +54,5 @@ if __name__ == '__main__':
     print("正在自动登入steam。。。")
     Popen(f"{steamPath}\\steam.exe -noreactlogin -login {username} {password}")
     print("————\033[1;32m自动登入成功？\033[0m\n")
-    Popen("start steam://rungameid/730")
 
     system("pause")
