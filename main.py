@@ -5,22 +5,20 @@ from winreg import OpenKeyEx, QueryValueEx, HKEY_CURRENT_USER
 
 from time import sleep
 from os.path import exists
-from os import system, remove
+from os import system, remove, listdir
 from subprocess import Popen
 
-for _ in range(1145141919810):
-    inputStr = input("格式：username----password----ssfnxxxx\n> ").split("----")
-    if not len(inputStr) == 3 or not "ssfn" in inputStr[2]: print("————\033[1;31m格式错误！\033[0m")
-    else: break
-
-username = "q1611004500"
-password = "rinima00"
-ssfn = "ssfn895090427336812694"
-
-username, password, ssfn = inputStr
-print(f"账号：{username}\n密码：{password}\nssfn凭证：{ssfn}", end="\n"*2)
 
 if __name__ == '__main__':
+    print("\033[1;33m该项目已在github开源，懂代码的可以提供你的宝贵意见（仅供学习交流，请不要使用它进行违法行为）：https://github.com/ShaqimaK/SteamSSFN-Python/blob/main/main.py\033[0m", end="\n" * 2)
+
+    for _ in range(1145141919810):
+        inputStr = input("格式：username----password----ssfnxxxx\n> ").split("----")
+        if not len(inputStr) == 3 or not "ssfn" in inputStr[2]: print("————\033[1;31m格式错误！\033[0m")
+        else: break
+    username, password, ssfn = inputStr
+    print(f"账号：{username}\n密码：{password}\nssfn凭证：{ssfn}", end="\n" * 2)
+
     for task in ("steam", "csgo"):
         print(f"正在尝试退出 {task}.exe 进程。。。")
         Popen(f'TASKKILL /F /IM {task}.exe')
@@ -47,12 +45,15 @@ if __name__ == '__main__':
     else: print("————\033[1;32m获取成功！\033[0m\n")
 
     print("正在建立ssfn凭证档案。。。")
-    if exists(f"{steamPath}\\{ssfn}"): remove(f"{steamPath}\\{ssfn}")
+    for file in listdir(steamPath):
+        if "ssfn" in file: remove(f"{steamPath}\\{file}")
+    # if exists(f"{steamPath}\\{ssfn}"): remove(f"{steamPath}\\{ssfn}")
     with open(f"{steamPath}\\{ssfn}", "wb") as ssfnFile: ssfnFile.write(ssfnContent)
     print("————\033[1;32m建立成功！\033[0m\n")
 
     print("正在自动登入steam。。。")
     Popen(f"{steamPath}\\steam.exe -noreactlogin -login {username} {password}")
     print("————\033[1;32m自动登入成功？\033[0m\n")
+    Popen("start steam://rungameid/730")
 
     system("pause")
